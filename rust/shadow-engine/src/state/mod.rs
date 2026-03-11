@@ -1,5 +1,6 @@
 //! Deterministic state transition module.
 
+pub mod codec;
 pub mod events;
 pub mod digest;
 pub mod replay;
@@ -7,6 +8,7 @@ pub mod snapshot;
 pub mod transition;
 
 use crate::types::{EngineError, EngineResult};
+pub use codec::serialize_state;
 pub use events::{AggressorSide, EventKind, MarketId, Side, StateEvent, TimestampMs};
 pub use replay::apply_events;
 pub use snapshot::ShadowState;
