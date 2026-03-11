@@ -35,21 +35,21 @@ This checklist tracks implementation progress against `AGENTS.md`.
 
 ## Phase 1 - Deterministic State Engine (Single-Market MVP)
 
-- [ ] Define canonical event model for single market:
-  - [ ] Book/trade/update event schema
-  - [ ] Deterministic ordering fields
-  - [ ] Sequence gap detection fields
-- [ ] Implement deterministic transition logic in `state/`:
-  - [ ] Pure transition function(s)
-  - [ ] Explicit integer/fixed-point math only
-  - [ ] Reject/handle out-of-order events
-  - [ ] Enforce sequence monotonicity
-- [ ] Ensure deterministic map/set handling:
-  - [ ] Use ordered data structures where needed
-  - [ ] Sort keys before serialization/hash input
-- [ ] Add replay runner:
-  - [ ] Apply ordered raw events -> resulting state
-  - [ ] Deterministic state hash output for same input
+- [x] Define canonical event model for single market:
+  - [x] Book/trade/update event schema
+  - [x] Deterministic ordering fields
+  - [x] Sequence gap detection fields
+- [x] Implement deterministic transition logic in `state/`:
+  - [x] Pure transition function(s)
+  - [x] Explicit integer/fixed-point math only
+  - [x] Reject/handle out-of-order events
+  - [x] Enforce sequence monotonicity
+- [x] Ensure deterministic map/set handling:
+  - [x] Use ordered data structures where needed
+  - [x] Sort keys before serialization/hash input
+- [x] Add replay runner:
+  - [x] Apply ordered raw events -> resulting state
+  - [x] Deterministic state hash output for same input (temporary `state_digest64`; canonical hash formalized in Phase 2)
 
 ## Phase 2 - Canonical Serialization + Schema Versioning
 

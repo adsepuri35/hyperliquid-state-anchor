@@ -1,12 +1,14 @@
 //! Deterministic state transition module.
 
 pub mod events;
+pub mod digest;
 pub mod replay;
 pub mod snapshot;
 pub mod transition;
 
 use crate::types::{EngineError, EngineResult};
 pub use events::{AggressorSide, EventKind, MarketId, Side, StateEvent, TimestampMs};
+pub use digest::state_digest64;
 pub use replay::apply_events;
 pub use snapshot::ShadowState;
 use transition::apply_event_kind;

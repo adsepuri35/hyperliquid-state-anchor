@@ -25,4 +25,12 @@ impl ShadowState {
             cumulative_trade_quantity: FixedI64(0),
         }
     }
+
+    pub fn iter_bids_asc(&self) -> impl Iterator<Item = (&FixedI64, &FixedI64)> {
+        self.bids.iter()
+    }
+
+    pub fn iter_asks_asc(&self) -> impl Iterator<Item = (&FixedI64, &FixedI64)> {
+        self.asks.iter()
+    }
 }
