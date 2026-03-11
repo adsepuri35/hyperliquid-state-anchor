@@ -17,6 +17,9 @@ fn apply_book_level_upsert(
     price: FixedI64,
     quantity: FixedI64,
 ) -> EngineResult<()> {
+    if price.0 <= 0 {
+        return Err(EngineError::InvalidInput("book level price must be positive"));
+    }
     if quantity.0 <= 0 {
         return Err(EngineError::InvalidInput(
             "book level quantity must be positive",
@@ -27,17 +30,30 @@ fn apply_book_level_upsert(
     Ok(())
 }
 
-fn apply_book_level_delete(state: &mut ShadowState, side: Side, price: FixedI64) {
+fn apply_book_level_delete(
+    state: &mut ShadowState,
+    side: Side,
+    price: FixedI64,
+) -> EngineResult<()> {
+    if price.0 <= 0 {
+        return Err(EngineError::InvalidInput(
+            "book level delete price must be positive",
+        ));
+    }
     side_levels_mut(state, side).remove(&price);
+    Ok(())
 }
 
 fn apply_trade(
     state: &mut ShadowState,
     _trade_id: u64,
-    _price: FixedI64,
+    price: FixedI64,
     quantity: FixedI64,
     _aggressor: AggressorSide,
 ) -> EngineResult<()> {
+    if price.0 <= 0 {
+        return Err(EngineError::InvalidInput("trade price must be positive"));
+    }
     if quantity.0 <= 0 {
         return Err(EngineError::InvalidInput("trade quantity must be positive"));
     }
@@ -59,8 +75,7 @@ pub fn apply_event_kind(state: &mut ShadowState, kind: &EventKind) -> EngineResu
     match kind {
         EventKind::BookLevelUpsert {side, price, quantity} => apply_book_level_upsert(state, *side, *price, *quantity),
         EventKind::BookLevelDelete { side, price } => {
-            apply_book_level_delete(state, *side, *price);
-            Ok(())
+            apply_book_level_delete(state, *side, *price)
         }
         EventKind::Trade {trade_id, price, quantity, aggressor} => apply_trade(state, *trade_id, *price, *quantity, *aggressor),
         EventKind::FundingUpdate { funding_rate } => {

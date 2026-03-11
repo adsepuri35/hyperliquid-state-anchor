@@ -3,16 +3,14 @@
 use crate::types::{FixedI64, Sequence};
 
 pub type TimestampMs = u64;
+pub type AssetId = u32;
 
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct MarketId(pub String);
+pub struct MarketId(pub AssetId);
 
 impl MarketId {
-    pub fn new(value: String) -> Option<Self> {
-        if value.trim().is_empty() {
-            return None;
-        }
-        Some(Self(value))
+    pub fn new(asset_id: AssetId) -> Self {
+        Self(asset_id)
     }
 }
 
