@@ -49,20 +49,20 @@ This checklist tracks implementation progress against `AGENTS.md`.
   - [x] Sort keys before serialization/hash input
 - [x] Add replay runner:
   - [x] Apply ordered raw events -> resulting state
-  - [x] Deterministic state hash output for same input (temporary `state_digest64`; canonical hash formalized in Phase 2)
+  - [x] Deterministic state hash output for same input
 
 ## Phase 2 - Canonical Serialization + Schema Versioning
 
-- [ ] Define explicit canonical serialization format (no implicit serde defaults for hashing)
-- [ ] Introduce `schema_version` constant and wire it into hash preimage:
-  - [ ] `hash = H(schema_version || serialized_state)`
-- [ ] Add versioning policy doc in `/docs/`:
-  - [ ] When version bump is required
-  - [ ] Backward compatibility assumptions
-- [ ] Add tests:
-  - [ ] Serialization stability snapshot tests
-  - [ ] Hash changes when schema version increments
-  - [ ] Hash stays identical across independent runs for same schema/input
+- [x] Define explicit canonical serialization format (no implicit serde defaults for hashing)
+- [x] Introduce `schema_version` constant and wire it into hash preimage:
+  - [x] `hash = H(schema_version || serialized_state)`
+- [x] Add versioning policy doc in `/docs/`:
+  - [x] When version bump is required
+  - [x] Backward compatibility assumptions
+- [x] Add tests:
+  - [x] Serialization stability snapshot tests
+  - [x] Hash changes when schema version increments
+  - [x] Hash stays identical across independent runs for same schema/input
 
 ## Phase 3 - Merkle Commitments and Proofs
 

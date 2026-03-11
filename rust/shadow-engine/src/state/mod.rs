@@ -7,6 +7,8 @@ pub mod hash;
 pub mod replay;
 pub mod snapshot;
 pub mod transition;
+#[cfg(test)]
+mod tests;
 
 use crate::types::{EngineError, EngineResult};
 pub use codec::serialize_state;
