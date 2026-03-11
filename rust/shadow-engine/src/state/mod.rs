@@ -1,24 +1,15 @@
 //! Deterministic state transition module.
 
 pub mod events;
+pub mod replay;
+pub mod snapshot;
+pub mod transition;
 
-use crate::types::{EngineError, EngineResult, Sequence};
+use crate::types::{EngineError, EngineResult};
 pub use events::{AggressorSide, EventKind, MarketId, Side, StateEvent, TimestampMs};
-
-#[derive(Debug, Clone, PartialEq, Eq)]
-pub struct ShadowState {
-    pub tracked_market_id: MarketId,
-    pub last_sequence: Option<Sequence>,
-}
-
-impl ShadowState {
-    pub fn new(tracked_market_id: MarketId) -> Self {
-        Self {
-            tracked_market_id,
-            last_sequence: None,
-        }
-    }
-}
+pub use replay::apply_events;
+pub use snapshot::ShadowState;
+use transition::apply_event_kind;
 
 pub fn apply_event(state: &mut ShadowState, event: &StateEvent) -> EngineResult<()> {
     if event.market_id != state.tracked_market_id {
@@ -36,6 +27,7 @@ pub fn apply_event(state: &mut ShadowState, event: &StateEvent) -> EngineResult<
         }
     }
 
+    apply_event_kind(state, &event.kind)?;
     state.last_sequence = Some(event.sequence);
     Ok(())
 }
