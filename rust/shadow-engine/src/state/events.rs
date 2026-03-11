@@ -6,11 +6,15 @@ pub type TimestampMs = u64;
 pub type AssetId = u32;
 
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct MarketId(pub AssetId);
+pub struct MarketId(AssetId);
 
 impl MarketId {
     pub fn new(asset_id: AssetId) -> Self {
         Self(asset_id)
+    }
+
+    pub fn as_asset_id(&self) -> AssetId {
+        self.0
     }
 }
 

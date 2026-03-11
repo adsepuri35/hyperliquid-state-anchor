@@ -1,3 +1,5 @@
+#![allow(dead_code)]
+
 use crate::types::SCHEMA_VERSION;
 
 use super::ShadowState;
@@ -12,14 +14,16 @@ fn fnv1a_extend(state: &mut u64, bytes: &[u8]) {
     }
 }
 
-pub fn state_digest64(state: &ShadowState) -> u64 {
+// Debug-only checksum for local determinism checks.
+// Not suitable for commitments or proof verification.
+pub(crate) fn debug_state_digest64(state: &ShadowState) -> u64 {
     let mut hash = FNV64_OFFSET_BASIS;
 
     fnv1a_extend(&mut hash, b"schema_v");
     fnv1a_extend(&mut hash, &SCHEMA_VERSION.to_le_bytes());
 
     fnv1a_extend(&mut hash, b"market");
-    fnv1a_extend(&mut hash, &state.tracked_market_id.0.to_le_bytes());
+    fnv1a_extend(&mut hash, &state.tracked_market_id.as_asset_id().to_le_bytes());
 
     fnv1a_extend(&mut hash, b"last_seq");
     match state.last_sequence {
