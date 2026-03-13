@@ -11,6 +11,8 @@ mod hash;
 pub mod leaves;
 pub mod proof;
 mod tree;
+#[cfg(test)]
+mod tests;
 
 pub use leaves::canonical_leaves_from_state;
 pub use proof::{generate_inclusion_proof, MerkleProof};

@@ -1,7 +1,7 @@
-use crate::types::{EngineError, EngineResult};
+use crate::types::EngineResult;
 
-use super::hash::{empty_root_hash, hash_node, leaf_hashes};
-use super::MerkleRoot;
+use super::hash::{empty_root_hash, hash_leaf, hash_node, leaf_hashes};
+use super::{MerkleProof, MerkleRoot};
 
 pub fn compute_root(canonical_leaves: &[Vec<u8>]) -> EngineResult<MerkleRoot> {
     if canonical_leaves.is_empty() {
@@ -29,11 +29,22 @@ pub fn compute_root(canonical_leaves: &[Vec<u8>]) -> EngineResult<MerkleRoot> {
     Ok(MerkleRoot(level[0]))
 }
 
-pub fn verify_inclusion(
-    _root: &MerkleRoot,
-    _leaf: &[u8],
-    _proof: &[Vec<u8>],
-    _index: u64,
-) -> EngineResult<bool> {
-    Err(EngineError::NotImplemented("merkle proof verification"))
+pub fn verify_inclusion(root: &MerkleRoot, leaf: &[u8], proof: &MerkleProof) -> EngineResult<bool> {
+    let mut computed = hash_leaf(leaf);
+    let mut index = proof.leaf_index;
+
+    for sibling in &proof.siblings {
+        computed = if index % 2 == 0 {
+            hash_node(&computed, sibling)
+        } else {
+            hash_node(sibling, &computed)
+        };
+        index /= 2;
+    }
+
+    if index != 0 {
+        return Ok(false);
+    }
+
+    Ok(computed == root.0)
 }

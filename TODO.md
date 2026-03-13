@@ -66,14 +66,14 @@ This checklist tracks implementation progress against `AGENTS.md`.
 
 ## Phase 3 - Merkle Commitments and Proofs
 
-- [ ] Implement `merkle/` root construction over canonicalized leaves
-- [ ] Define leaf encoding format and domain separators
-- [ ] Implement inclusion proof generation
-- [ ] Implement proof verification library (Rust side)
-- [ ] Add tests:
-  - [ ] Root reproducibility
-  - [ ] Valid proof acceptance
-  - [ ] Invalid proof rejection (tampered leaf/path/index)
+- [x] Implement `merkle/` root construction over canonicalized leaves
+- [x] Define leaf encoding format and domain separators
+- [x] Implement inclusion proof generation
+- [x] Implement proof verification library (Rust side)
+- [x] Add tests:
+  - [x] Root reproducibility
+  - [x] Valid proof acceptance
+  - [x] Invalid proof rejection (tampered leaf/path/index)
 
 ## Phase 4 - Epoch Logic and Root Freeze
 
