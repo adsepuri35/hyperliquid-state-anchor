@@ -16,6 +16,12 @@
 
 use crate::types::{EngineError, EngineResult, EpochId};
 
+pub mod policy;
+pub mod manager;
+
+pub use manager::{EpochAdvance, EpochManager};
+pub use policy::FixedTimeEpochPolicy;
+
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct FinalizedEpoch {
     pub epoch_id: EpochId,
