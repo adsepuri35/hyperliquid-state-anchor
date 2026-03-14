@@ -14,25 +14,16 @@
 //! - Attempted epoch rollback.
 //! - Duplicate finalization.
 
-use crate::types::{EngineError, EngineResult, EpochId};
-
 pub mod policy;
 pub mod manager;
+pub mod artifact;
+pub mod finalize;
+pub mod store;
+pub mod orchestrator;
 
+pub use artifact::FinalizedEpochRecord;
+pub use finalize::finalize_epoch;
 pub use manager::{EpochAdvance, EpochManager};
+pub use orchestrator::EpochOrchestrator;
 pub use policy::FixedTimeEpochPolicy;
-
-#[derive(Debug, Clone, PartialEq, Eq)]
-pub struct FinalizedEpoch {
-    pub epoch_id: EpochId,
-    pub root_hash: [u8; 32],
-}
-
-pub fn validate_next_epoch(last: Option<EpochId>, next: EpochId) -> EngineResult<()> {
-    if let Some(current) = last {
-        if next <= current {
-            return Err(EngineError::InvalidInput("non-monotonic epoch"));
-        }
-    }
-    Ok(())
-}
+pub use store::{EpochRecordStore, InMemoryEpochRecordStore};

@@ -77,17 +77,17 @@ This checklist tracks implementation progress against `AGENTS.md`.
 
 ## Phase 4 - Epoch Logic and Root Freeze
 
-- [ ] Implement `epoch/` scheduler policy:
-  - [ ] Epoch boundary definition
-  - [ ] Freeze/finalize state at epoch close
-- [ ] Persist epoch artifacts:
-  - [ ] `epoch_id`
-  - [ ] `root_hash`
-  - [ ] Timestamp + publisher metadata
-- [ ] Enforce epoch monotonicity in off-chain logic
-- [ ] Add tests:
-  - [ ] No duplicate epoch commitment records
-  - [ ] No epoch rollback/overwrite
+- [x] Implement `epoch/` scheduler policy:
+  - [x] Epoch boundary definition
+  - [x] Freeze/finalize state at epoch close
+- [x] Persist epoch artifacts:
+  - [x] `epoch_id`
+  - [x] `root_hash`
+  - [x] Timestamp + publisher metadata
+- [x] Enforce epoch monotonicity in off-chain logic
+- [x] Add tests:
+  - [x] No duplicate epoch commitment records
+  - [x] No epoch rollback/overwrite
 
 ## Phase 5 - Database and Replay Persistence (Postgres)
 

@@ -14,7 +14,7 @@
 //! - RPC submission failures.
 //! - Nonce/replay/contract rejections.
 
-use crate::epoch::FinalizedEpoch;
+use crate::epoch::FinalizedEpochRecord;
 use crate::types::{EngineError, EngineResult};
 
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -23,12 +23,12 @@ pub struct PublishReceipt {
 }
 
 pub trait RootPublisher {
-    fn publish(&self, epoch: &FinalizedEpoch) -> EngineResult<PublishReceipt>;
+    fn publish(&self, epoch: &FinalizedEpochRecord) -> EngineResult<PublishReceipt>;
 }
 
 pub fn publish_once<P: RootPublisher>(
     publisher: &P,
-    epoch: &FinalizedEpoch,
+    epoch: &FinalizedEpochRecord,
 ) -> EngineResult<PublishReceipt> {
     if epoch.epoch_id == 0 {
         return Err(EngineError::InvalidInput("epoch_id must start from 1"));
